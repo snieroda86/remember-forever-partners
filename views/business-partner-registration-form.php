@@ -1,8 +1,21 @@
+<?php 
+$business_partner_account_page_id = get_option('business_partner_account_page_id');
+if($business_partner_account_page_id){
+
+    $business_partner_login_form = get_permalink($business_partner_account_page_id);
+} 
+?>
 <div class=" rmf-partners-form-wrap">
     <div class="justify-content-center">
         <div class="rmf-partners-form-container">
             <div class="alert alert-info text-center">
                 <?php _e('Załóż konto klienta biznesowego i zostań naszym partnerem!', 'remember-forever'); ?>
+
+                <br>
+                <?php if($business_partner_login_form): ?>
+                <?php _e('Masz już konto partnera?', 'remember-forever'); ?>
+                <a href="<?php echo esc_url($business_partner_login_form) ?>"><?php _e('Zaloguj się', 'remember-forever'); ?></a>
+                <?php endif; ?>
             </div>
 
             <form method="post" class="border p-4 rounded bg-light shadow-sm">

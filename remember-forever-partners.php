@@ -48,20 +48,24 @@ function remember_forever_partners_wpml_notice() {
 
 if( ! class_exists('Remember_Forever_Partners')){
 	class Remember_Forever_Partners{
+
+
 		public function __construct(){
 			$this->define_constants();
 
 			add_action('plugins_loaded', array($this , 'snrm_load_textdomain'));
 
-	
-			//require_once(SN_SLIDER_PATH.'functions/functions.php');
 			// Create admin menu
 			add_action('admin_menu' , array($this , 'create_admin_menu') );
 			
 
-			// slider shortcode
+			// registration form shortcode
 			require_once(RMF_SN_PATH.'/shortcodes/business-partners-registration-form.php');
 			$RMB_Forever_Registration = new RMB_Forever_Registration();
+
+			// partner account
+			require_once(RMF_SN_PATH.'/shortcodes/business-partner-account.php');
+			$RMB_Forever_Account = new RMB_Forever_Account();
 
 			// Enqueue scripts
 			add_action('wp_enqueue_scripts' , array($this , 'register_scripts'),999 );
@@ -85,16 +89,51 @@ if( ! class_exists('Remember_Forever_Partners')){
 		// Activate
 		public static function activate(){ 
 
+			// Create custom user role
 			$customer_role = get_role('customer');
     
-		    if ($customer_role) {
-		        $customer_capabilities = $customer_role->capabilities;
+		    if (!get_role('partner_biznesowy')) {
+			    if ($customer_role) {
+			        add_role('partner_biznesowy', 'Partner biznesowy', $customer_role->capabilities);
+			    } else {
+			        add_role('partner_biznesowy', 'Partner biznesowy', ['read' => true]);
+			    }
+			}
 
-		        add_role('partner_biznesowy', 'Partner biznesowy', $customer_capabilities);
-		    } else {
-		       
-		        add_role('partner_biznesowy', 'Partner biznesowy', ['read' => true]);
+		    // Create login / business partneta account page 
+		    $page_title = 'Konto partnera biznesowego';
+		    $page_slug = 'konto-partnera-biznesowego';
+		    $current_user = wp_get_current_user();
+
+		    $args = array(
+			    'post_type' => 'page',
+			    'post_status' => 'publish',
+			    'posts_per_page' => 1,
+			    'name' => $page_slug,
+			    
+		    );
+
+		    $query = new WP_Query($args);
+
+		    if (!$query->have_posts()) {
+		       $page_id = wp_insert_post(array(
+		            'post_title'     => $page_title,
+		            'post_name' => $page_slug,
+		            'post_type'      => 'page',
+		            'post_status'    => 'publish',
+		            'post_author'   => $current_user->ID,
+			    	'post_content'  => '<!-- wp:shortcode -->[rm_partner_account]<!-- /wp:shortcode -->'
+		        ));
+
+		       if ($page_id) {
+				    update_option('business_partner_account_page_id', $page_id);
+			   }
+
 		    }
+
+
+
+
 		}
 
 		// Deactivate
@@ -165,12 +204,9 @@ if( ! class_exists('Remember_Forever_Partners')){
 		// Regitser scripts
 		public function register_scripts(){
 			wp_register_style( 'rmf-partners-style', RMF_SN_URL.'/assets/css/rmf-partners-style.css' );
+			wp_register_style( 'rmf-partners-account-style', RMF_SN_URL.'/assets/css/rmf-partners-account-style.css' );
+
 		}
-
-		
-
-
-
 
 	}
 }
