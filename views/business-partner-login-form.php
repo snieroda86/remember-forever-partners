@@ -49,9 +49,37 @@ if ($error = get_transient('rmf_login_error')) {
     <?php 
     $current_user = wp_get_current_user(); 
     if (in_array('partner_biznesowy', (array) $current_user->roles)): ?>
-        <h2>Jesteś zalogowany jako partner</h2>
+        
+        <?php 
+        $current_user_access = get_user_meta($current_user->ID , 'partner_has_access' , true); 
+        if((int)$current_user_access == 0){
+            $file = RMF_SN_PATH . 'views/account/account-access-danied.php';
+            if (file_exists($file)) {
+                require $file;
+            } else {
+                echo 'Brak pliku dostępu.';
+            }
+        }elseif((int)$current_user_access == 1){
+            $file = RMF_SN_PATH . 'views/account/account-full-access.php';
+            if (file_exists($file)) {
+                require $file;
+            } else {
+                echo 'Brak pliku dostępu.';
+            }
+        }else{
+            $file = RMF_SN_PATH . 'views/account/account-access-danied.php';
+            if (file_exists($file)) {
+                require $file;
+            } else {
+                echo 'Brak pliku dostępu.';
+            }
+        }
+        
+        ?>
+
     <?php else: ?>
-        <h2>Nie masz roli partnera biznesowego</h2>
+        <h2><?php _e('Nie masz roli partnera biznesowego', 'remember-forever'); ?></h2>
+
     <?php endif; ?>
 
 <?php endif; ?>

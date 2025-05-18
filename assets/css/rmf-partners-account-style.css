@@ -2,3 +2,9 @@
 	max-width: 680px;
 	margin:60px auto 0 auto;
 }
+.account-partner-wrapper{
+	max-width: 960px;
+	margin: auto;
+	padding: 60px;
+	background: #eee;
+}
