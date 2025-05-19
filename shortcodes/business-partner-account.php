@@ -6,6 +6,7 @@ if(!class_exists('RMB_Forever_Account')){
 		public function __construct(){
 			add_shortcode( 'rm_partner_account', array($this , 'rmb_forever_account_shortcode') );
 			add_action('template_redirect', array($this, 'handle_login'));
+			add_action('admin_post_generuj_pdf', [$this, 'rmf_generuj_pdf']);
 		}
 
 		public function rmb_forever_account_shortcode(){
@@ -44,6 +45,29 @@ if(!class_exists('RMB_Forever_Account')){
 		        }
 		    }
 		}
+
+
+		// Generat pdf catalogue
+		public function rmf_generuj_pdf(){
+			if (!isset($_POST['pdf_nonce']) || !wp_verify_nonce($_POST['pdf_nonce'], 'formularz_pdf')) {
+		        wp_die('Błąd weryfikacji');
+		    }
+
+		    // $imie = sanitize_text_field($_POST['imie']);
+		    // $nazwisko = sanitize_text_field($_POST['nazwisko']);
+
+		    require_once RMF_SN_PATH . 'vendor/autoload.php';
+
+		    $mpdf = new \Mpdf\Mpdf(['default_font' => 'dejavusans']);
+		    
+		    ob_start();
+			require RMF_SN_PATH . 'views/account/generate-pdf-process.php';
+			$html = ob_get_clean();
+
+		    $mpdf->WriteHTML($html);
+		    $mpdf->Output("dokument.pdf", "D"); // 'I' = otworzy sie w przegladarce, 'D' = automatycznie się pobierze 
+		}
+
 
 
 

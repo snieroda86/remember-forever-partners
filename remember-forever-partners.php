@@ -39,6 +39,8 @@ function remember_forever_partnets_check_wpml() {
     }
 }
 
+
+
 function remember_forever_partners_wpml_notice() {
     echo '<div class="notice notice-error is-dismissible">';
     echo '<p><strong>Nie można aktywować wtyczki: wymagana jest aktywna wtyczka WPML.</strong></p>';

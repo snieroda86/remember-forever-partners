@@ -11,8 +11,7 @@ global $sitepress;
 
 if ( isset( $sitepress ) ) {
     $enabled_languages = $sitepress->get_active_languages();
-    
-   
+      
 } else {
     echo 'WPML nie jest dostępny.';
 }
@@ -27,13 +26,6 @@ $current_lang_product_tags = get_terms( array(
     'taxonomy' => 'product_tag',
     'hide_empty' => true,
 ) );
-
-// if ( ! empty( $terms ) && ! is_wp_error( $terms ) ){
-//     foreach ( $terms as $term ) {
-//         echo $term->term_id.' , '.'<br>';
-//     }
-// }
-
 
 
 $company_name = get_user_meta($user_id, 'company_name', true);

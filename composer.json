@@ -1,0 +1,19 @@
+{
+    "name": "sebol/remember-forever-partners",
+    "description": "Biblioteki",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "RememberForeverPartners\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sebastian Nieroda",
+            "email": "snieroda86@gmail.com"
+        }
+    ],
+    "require": {
+        "mpdf/mpdf": "^8.2"
+    }
+}
