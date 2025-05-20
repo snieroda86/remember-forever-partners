@@ -53,9 +53,7 @@ if(!class_exists('RMB_Forever_Account')){
 		        wp_die('Błąd weryfikacji');
 		    }
 
-		    // $imie = sanitize_text_field($_POST['imie']);
-		    // $nazwisko = sanitize_text_field($_POST['nazwisko']);
-
+		   
 		    require_once RMF_SN_PATH . 'vendor/autoload.php';
 
 		    $mpdf = new \Mpdf\Mpdf(['default_font' => 'dejavusans']);
@@ -64,8 +62,27 @@ if(!class_exists('RMB_Forever_Account')){
 			require RMF_SN_PATH . 'views/account/generate-pdf-process.php';
 			$html = ob_get_clean();
 
+			$current_lang = apply_filters('wpml_current_language', null);
+
+			// Nazwa dokumentu pdf na podstawie jezyka
+			switch ($current_lang) {
+			    case 'pl':
+			        $catalog_document_name = 'katalog-produktow-rememberme-forever.pdf';
+			        break;
+			    case 'en':
+			        $catalog_document_name = 'product-catalog-rememberme-forever.pdf';
+			        break;
+			    case 'de':
+			        $catalog_document_name = 'produktkatalog-rememberme-forever.pdf';
+			        break;
+			    default:
+			        $catalog_document_name = 'product-catalog-rememberme-forever.pdf';
+			        break;
+			}
+
+
 		    $mpdf->WriteHTML($html);
-		    $mpdf->Output("dokument.pdf", "D"); // 'I' = otworzy sie w przegladarce, 'D' = automatycznie się pobierze 
+		    $mpdf->Output( $catalog_document_name , "D"); // 'I' = otworzy sie w przegladarce, 'D' = automatycznie się pobierze 
 		}
 
 

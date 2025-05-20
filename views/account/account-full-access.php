@@ -34,6 +34,13 @@
 			        </tr>
 			    </tbody>
 			</table>
+
+			<div class="pt-3">
+				<?php $logout_url = wp_logout_url(home_url()); ?>
+				<a href="<?php echo esc_url($logout_url) ?>" class="btn brn-danger">
+					<?php _e('Wyloguj się' , 'remember-forever') ?>
+				</a>
+			</div>
 		</div>
 		<div class="col-md-8">
 			<h5 class="pb-4">
