@@ -12,9 +12,9 @@
             <th id="columnname" class="manage-column column-columnname" scope="col">
             	Dostęp
             </th>
-             <th id="columnname" class="manage-column column-columnname" scope="col">
+            <!--  <th id="columnname" class="manage-column column-columnname" scope="col">
             	Rabat ( % )
-            </th>
+            </th> -->
             <th id="columnname" class="manage-column column-columnname num" scope="col" style="text-align: right;">
             	Akcja
             </th> 
@@ -52,7 +52,7 @@
 			            	?>
 			            </td>
 			            
-			            <td>
+			           <!--  <td>
 						    <?php 
 						    $partner_percentage_discount = get_user_meta($user->ID , 'partner_percentage_discount' , true); 
 
@@ -62,7 +62,7 @@
 						        echo esc_html($partner_percentage_discount) . '%';
 						    }
 						    ?>
-						</td>
+						</td> -->
 
 
 			            <td class="column-columnname" style="text-align: right;">

@@ -40,6 +40,16 @@ if (isset($_POST['generate_catalog_rm_submit'])) {
     $partner_tags_ids_json = $_POST['partner_tags_ids'] ?? '[]';
     $partner_tags_ids = json_decode(stripslashes($partner_tags_ids_json), true);
     $discount_apply_rm = $_POST['discount_apply_rm'] ?? null;
+    $selected_products = $_POST['selected_products'] ?? null;
+
+    if (empty($selected_products)) {
+        $referer = wp_get_referer();
+        $redirect_url = add_query_arg('no_products', '1', $referer);
+
+        wp_safe_redirect($redirect_url);
+        exit;
+    }
+
 }
 
 if (empty($partner_tags_ids) || !is_array($partner_tags_ids)) {
@@ -68,12 +78,20 @@ if (!empty($choosen_lang)) {
 
 // Pobieranie produktów z przypisanych tagów
 $args = [
-    'post_type'      => 'product',
-    'posts_per_page' => -1,
-    'orderby'        => 'date',
-    'order'          => 'DESC',
+    'post_type'        => 'product',
+    'posts_per_page'   => -1,
+    'orderby'          => 'date',
+    'order'            => 'DESC',
     'suppress_filters' => false,
 ];
+
+
+if (!empty($selected_products) && is_array($selected_products)) {
+    $args['post__in'] = array_map('intval', $selected_products);
+} else {
+    
+    return;
+}
 
 if (!empty($partner_tags_ids) && is_array($partner_tags_ids)) {
     $args['tax_query'] = [

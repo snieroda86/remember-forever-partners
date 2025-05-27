@@ -52,76 +52,133 @@
 				<?php _e('Aby zastosować rabat w cenach produktów zaznacz odpowiedni checkbox obok przycisku "Generuj katalog".', 'remember-forever'); ?>
 			</p>
 
+			<!-- Error display -->
+			<div>
+				<?php 
+				if (isset($_GET['no_products']) && $_GET['no_products'] == '1') {
+				    echo '<div class="alert alert-danger mt-3"><p>' . esc_html__('Nie wybrano produktów.', 'remember-forever') . '</p></div>';
+				}
+				 ?>
+
+			</div>
+
 			<!-- Generate catalog form -->
 			<div class="pt-3">
+				<?php global $sitepress; 
+				if ( isset( $sitepress ) ) :
+				$enabled_languages = $sitepress->get_active_languages(); 
+				?>
+				<div class="lang-cataloge-switch pb-2">
+					<?php echo do_shortcode('[wpml_language_switcher type="widget" flags=1 native=1 translated=1][/wpml_language_switcher]'); ?>
+				</div>
+				<?php endif; ?>
+
+
 				<?php  
 				// Enabled languages
-				global $sitepress;
+				
+				if ( isset( $sitepress ) ) { 
+					$current_lang = apply_filters( 'wpml_current_language', NULL );
 
-				if ( isset( $sitepress ) ) {
-				    $enabled_languages = $sitepress->get_active_languages();
+					?>
+				    <div>
+				    	
+				    	<form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
+							<input type="hidden" name="action" value="generuj_pdf">
+							<?php wp_nonce_field('formularz_pdf', 'pdf_nonce'); ?>
+								<input type="hidden" name="choosen_lang"  value="<?php echo esc_html($current_lang); ?>">
+								<?php 
+								$partner_tags_ids = get_user_meta($user_id , $current_lang.'_partner_p_tags_assigned' , true);
+								if( !empty($partner_tags_ids) && is_array($partner_tags_ids)){
+									$partner_tags_ids_json = json_encode($partner_tags_ids);
+								}else{
+								$partner_tags_ids_json = json_encode([]);
+								}
+								?>
+								<input type="hidden" name="partner_tags_ids"  value="<?php echo esc_attr($partner_tags_ids_json); ?>">
+								<!-- Products -->
 
-				    if($enabled_languages){ 
-				    	// echo '<pre>';
-				    	// print_r($enabled_languages);
-				    	// echo '</pre>';
+								<div>
+									<?php
 
-				    	?>
-				    	<table class="table table-bordered">
-				  			<?php if(is_array($enabled_languages)): ?>
-				  				<?php foreach($enabled_languages as $lang): ?>
-				  					<tr>
-				  						<th>
-				  							<span><?php echo $lang['native_name']; ?></span>
-				  							<?php
-				  							$flag_url = RMF_SN_URL.'assets/flags/'.$lang['code'].'.svg'; 
-				  							$flag_path = RMF_SN_PATH . 'assets/flags/' . $lang['code'] . '.svg'; 
-				  							if(file_exists($flag_path)){ ?>
-				  								<span class="ps-2">
-				  									<img style="width:20px;" src="<?php echo esc_url($flag_url ); ?>">
-				  								</span>
-				  							<?php } 
-				  							
-				  							?>
-				  						</th>
+								
+								$args = array(
+								        'post_type'      => 'product',
+									    'posts_per_page' => -1,
+									    'orderby'        => 'date',
+									    'order'          => 'DESC',
+									    'suppress_filters' => false,
+										'tax_query' => array(
+									        array(
+									            'taxonomy' => 'product_tag',
+									            'field'    => 'term_id',
+									            'terms'    => $partner_tags_ids,
+									        ),
+								    ),
+								);
 
-				  						<td>
-				  							<form method="post" action="<?php echo admin_url('admin-post.php'); ?>">
-				  								<input type="hidden" name="action" value="generuj_pdf">
-    											<?php wp_nonce_field('formularz_pdf', 'pdf_nonce'); ?>
-				  								<input type="hidden" name="choosen_lang"  value="<?php echo esc_html($lang['code']); ?>">
-				  								<?php 
-				  								$partner_tags_ids = get_user_meta($user_id , $lang['code'].'_partner_p_tags_assigned' , true);
-				  								if( !empty($partner_tags_ids) && is_array($partner_tags_ids)){
-				  									$partner_tags_ids_json = json_encode($partner_tags_ids);
-				  								}else{
-													$partner_tags_ids_json = json_encode([]);
-				  								}
-				  								?>
-				  								<input type="hidden" name="partner_tags_ids"  value="<?php echo esc_attr($partner_tags_ids_json); ?>">
 
-				  								<div class="d-flex">
-				  									<div class="px-5">
-				  										<?php if($partner_discount && $partner_discount > 0 ): ?>
-				  											<label>
-				  												<?php _e('Zastosuj rabat' , 'remember-forever'); ?>
-				  												<input class="form-check-input" type="checkbox"  value="<?php echo $partner_discount ?>" name="discount_apply_rm">
-				  											</label>
-				  										<?php endif; ?>
-				  									</div>
-				  									<div>
-				  										<input value="<?php _e('Generuj katalog PDF' , 'remember-forever'); ?>" class="btn btn-primary" type="submit" name="generate_catalog_rm_submit">
-				  									</div>
+								$query = new WP_Query($args);
+								?>
 
-				  								</div>
-				  							</form>
-				  						</td>
-				  					</tr>
-				  				<?php endforeach; ?>
-				  			<?php endif; ?>
-						</table>
-				    <?php }
-				      
+								<?php if ($query->have_posts()) : ?>
+								   
+							        <table class="table table-bordered">
+							            <thead>
+							                <tr>
+							                    <th>Nazwa produktu</th>
+							                    <th>Obrazek</th>
+							                    <th>Wybierz</th>
+							                </tr>
+							            </thead>
+							            <tbody>
+							                <?php while ($query->have_posts()) : $query->the_post(); ?>
+							                    <?php
+							                    global $product;
+							                    $product_id = $product->get_id();
+							                    $title = get_the_title();
+							                    $image = wp_get_attachment_image($product->get_image_id(), 'thumbnail');
+							                    ?>
+							                    <tr>
+							                        <td><?php echo esc_html($title); ?></td>
+							                        <td><?php echo $image; ?></td>
+							                        <td>
+							                            <input type="checkbox" name="selected_products[]" value="<?php echo esc_attr($product_id); ?>">
+							                        </td>
+							                    </tr>
+							                <?php endwhile; ?>
+							            </tbody>
+							        </table>
+								   
+								    <?php wp_reset_postdata(); ?>
+								<?php else : ?>
+								    <p><?php _e('Brak produktów' , 'remember-forever'); ?></p>
+								<?php endif; ?>
+
+								</div>
+
+								<!-- Products end -->
+
+								<div class="d-flex">
+									<div class="pe-5 pt-2">
+										
+										<label>
+											
+											<input class="form-check-input" type="checkbox"  name="discount_apply_rm">
+											<?php _e('Nie wyświetlaj cen w katalogu' , 'remember-forever'); ?>
+										</label>
+										
+									</div>
+									<div>
+										<input value="<?php _e('Generuj katalog PDF' , 'remember-forever'); ?>" class="btn btn-primary" type="submit" name="generate_catalog_rm_submit">
+									</div>
+
+								</div>
+							</form>
+						<!-- Form end -->
+						
+				    </div>
+				<?php       
 				} else {
 				    echo 'Wymagana jest wtyczka WPML';
 				}
@@ -132,5 +189,55 @@
 
 
 	</div>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			// var tabsNavItems = document.querySelectorAll('.generate-catalog-tabs li');
+			// var tabContents = document.querySelectorAll('.tab-content');
+
+			
+			// tabsNavItems.forEach(function(item) {
+			// 	item.classList.remove('active');
+			// });
+			// tabContents.forEach(function(content) {
+			// 	content.style.display = 'none';
+			// });
+
+			
+			// if (tabsNavItems.length > 0) {
+			// 	var firstTab = tabsNavItems[0];
+			// 	firstTab.classList.add('active');
+
+			// 	var lang = firstTab.getAttribute('data-lang-tab');
+			// 	var firstContent = document.querySelector('.tab-content[data-lang="' + lang + '"]');
+			// 	if (firstContent) {
+			// 		firstContent.style.display = 'block';
+			// 	}
+			// }
+
+			
+			// tabsNavItems.forEach(function(item){
+			// 	item.addEventListener("click", function(e){
+			// 		e.preventDefault();
+
+					
+			// 		tabsNavItems.forEach(function(el) { el.classList.remove('active'); });
+			// 		tabContents.forEach(function(content) { content.style.display = 'none'; });
+
+					
+			// 		this.classList.add('active');
+
+					
+			// 		var lang = this.getAttribute('data-lang-tab');
+			// 		var selectedContent = document.querySelector('.tab-content[data-lang="' + lang + '"]');
+			// 		if (selectedContent) {
+			// 			selectedContent.style.display = 'block';
+			// 		}
+			// 	});
+			// });
+		});
+
+
+	</script>
 	
 </div>
