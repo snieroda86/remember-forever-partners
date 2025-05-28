@@ -103,10 +103,45 @@ if (!empty($partner_tags_ids) && is_array($partner_tags_ids)) {
     ];
 }
 
+$current_user = wp_get_current_user();
+$current_user_id = $current_user->ID;
+
+// Teksty statyczne w katalogu - ustawta i zastosujta
+
+if (!empty($choosen_lang)) {
+    
+    switch ($choosen_lang) {
+        case 'pl':
+            $naglowek = 'Katalog produktów';
+            $podtytul = 'Zapraszamy do zapoznania się z ofertą naszych produktów...';
+            $cena = 'Cena produktu:';
+            $cecha = 'Cecha';
+            $wartosc = 'Wartość';
+            break;
+        case 'en':
+            $naglowek = 'Product catalog';
+            $podtytul = 'We invite you to browse our product range...';
+            $cena = 'Price:';
+            $cecha = 'Attribute';
+            $wartosc = 'Value';
+            break;
+        default:
+            $naglowek = 'Product catalog';
+            $podtytul = 'We invite you to browse our product range...';
+            $cena = 'Price:';
+            $cecha = 'Attribute';
+            $wartosc = 'Value';
+            break;
+    }
+} 
+
+// Koniec teksty statyczne
+
 $query = new WP_Query($args);
 
 if ($query->have_posts()) : ?>
-    <h1><?php _e('Katalog produktów' , 'remember-forever') ?></h1>
+    <h1><?php echo esc_html($naglowek); ?></h1>
+    <h4><?php echo esc_html($podtytul); ?></h4>
     <ul style="list-style:none; padding:0;">
         <?php while ($query->have_posts()) : $query->the_post(); ?>
             <?php
@@ -114,19 +149,48 @@ if ($query->have_posts()) : ?>
             $title = get_the_title();
             $price_raw = floatval($product->get_price());
 
-            // Rabat na cenie
-            if (!is_null($discount_apply_rm) && is_numeric($discount_apply_rm) && $discount_apply_rm > 0) {
-                $price_raw = $price_raw * (1 - ($discount_apply_rm / 100));
+            // Apply discount 
+            global $wpdb;
+            $product_id = $product->get_id();
+
+            $discount_percentage = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT discount_percentage FROM {$wpdb->prefix}partners_product_discount WHERE user_id = %d AND product_id = %d",
+                    $current_user_id,
+                    $product_id
+                )
+            );
+
+           if ($discount_percentage !== null && is_numeric($discount_percentage)) {
+                $discount = floatval($discount_percentage);
+
+                if ($discount > 0 && $discount < 100) {
+                    $discounted_price = $price_raw - ($price_raw * ($discount / 100));
+
+                } else {
+                    $discounted_price = $price_raw;
+                }
+            } else {
+                $discounted_price = $price_raw; 
             }
 
-            $converted_price = number_format($price_raw / $dzielnik, 2);
+            $rounded_price = round($discounted_price / $dzielnik);
+            $converted_price = number_format($rounded_price, 2, '.', '');
+
+
+            // $converted_price = number_format($discounted_price / $dzielnik, 2, '.', '');
 
             $image = wp_get_attachment_image($product->get_image_id(), 'medium');
             ?>
             <li style="margin-bottom:20px;">
                 <h2><?php echo esc_html($title); ?></h2>
                 <?php echo $image; ?>
-                <p><?php _e('Cena produktu', 'remember-forever') ?> <?php echo $converted_price . ' ' . $currency; ?></p>
+                <p>
+                    <span><?php echo esc_html($cena); ?></span> 
+                    <?php if(is_null($discount_apply_rm)): ?>
+                    <?php echo $converted_price  . ' ' . $currency; ?>
+                    <?php endif; ?>
+                </p>
 
                <!-- Atrybuty -->
                 <?php
@@ -149,8 +213,8 @@ if ($query->have_posts()) : ?>
                     echo '<table style="width: 100%; border-collapse: collapse; margin-top: 10px;">';
                     echo '<thead>';
                     echo '<tr>';
-                    echo '<th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px;">' . __('Cecha', 'remember-forever') . '</th>';
-                    echo '<th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px;">' . __('Wartość', 'remember-forever') . '</th>';
+                    echo '<th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px;">' . $cecha . '</th>';
+                    echo '<th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px;">' . $wartosc . '</th>';
                     echo '</tr>';
                     echo '</thead>';
                     echo '<tbody>';

@@ -49,9 +49,9 @@ if(!class_exists('RMB_Forever_Account')){
 
 		// Generat pdf catalogue
 		public function rmf_generuj_pdf(){
-			if (!isset($_POST['pdf_nonce']) || !wp_verify_nonce($_POST['pdf_nonce'], 'formularz_pdf')) {
-		        wp_die('Błąd weryfikacji');
-		    }
+			// if (!isset($_POST['pdf_nonce']) || !wp_verify_nonce($_POST['pdf_nonce'], 'formularz_pdf')) {
+		 //        wp_die('Błąd weryfikacji');
+		 //    }
 
 		   
 		    require_once RMF_SN_PATH . 'vendor/autoload.php';
@@ -64,7 +64,7 @@ if(!class_exists('RMB_Forever_Account')){
 
 			$current_lang = apply_filters('wpml_current_language', null);
 
-			// Nazwa dokumentu pdf na podstawie jezyka
+			// Nazwa dokumentu pdf na podstawie jezyka - dostosujcie sobie
 			switch ($current_lang) {
 			    case 'pl':
 			        $catalog_document_name = 'katalog-produktow-rememberme-forever.pdf';
@@ -82,7 +82,7 @@ if(!class_exists('RMB_Forever_Account')){
 
 
 		    $mpdf->WriteHTML($html);
-		    $mpdf->Output( $catalog_document_name , "D"); // 'I' = otworzy sie w przegladarce, 'D' = automatycznie się pobierze 
+		    $mpdf->Output( $catalog_document_name , "D"); // 'I' = otworzy sie w przegladarce, 'D' = automatycznie się pobierze - ustawcie wg preferencji
 		}
 
 
