@@ -28,10 +28,11 @@
 			            <td><?php echo esc_html($company_nip); ?></td>
 			        </tr>
 			        
-			        <tr>
+			        
+			        <!-- <tr>
 			            <th class="bg-light"><?php _e('Rabat(%)', 'remember-forever'); ?></th>
 			            <td><?php echo esc_html($partner_discount); ?>%</td>
-			        </tr>
+			        </tr> -->
 			    </tbody>
 			</table>
 

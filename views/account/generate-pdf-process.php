@@ -3,40 +3,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-function get_eur_exchange_rate_from_nbp() {
-    $response = wp_remote_get('https://api.nbp.pl/api/exchangerates/rates/A/EUR/?format=json');
-
-    if (is_wp_error($response)) {
-        return false;
-    }
-
-    $body = wp_remote_retrieve_body($response);
-    $data = json_decode($body, true);
-
-    if (!isset($data['rates'][0]['mid'])) {
-        return false;
-    }
-
-    return floatval($data['rates'][0]['mid']);
-}
-
-function get_cached_eur_rate() {
-    $cached = get_transient('eur_exchange_rate_nbp');
-    if ($cached !== false) {
-        return $cached;
-    }
-
-    $rate = get_eur_exchange_rate_from_nbp();
-    if ($rate !== false) {
-        set_transient('eur_exchange_rate_nbp', $rate, 12 * HOUR_IN_SECONDS);
-    }
-
-    return $rate ?: 4.25; // Tu ustawić kurs euro na wypadek jak by pobierani z api nie zadziałało
-}
-
 // Dane z forma
 if (isset($_POST['generate_catalog_rm_submit'])) {
     $choosen_lang = $_POST['choosen_lang'] ?? '';
+    $current_currency = $_POST['current_currency'] ?? 'GBP';
     $partner_tags_ids_json = $_POST['partner_tags_ids'] ?? '[]';
     $partner_tags_ids = json_decode(stripslashes($partner_tags_ids_json), true);
     $discount_apply_rm = $_POST['discount_apply_rm'] ?? null;
@@ -52,6 +22,49 @@ if (isset($_POST['generate_catalog_rm_submit'])) {
 
 }
 
+function get_currency_exchange_rate_from_nbp($currency) {
+    $response = wp_remote_get('https://api.nbp.pl/api/exchangerates/rates/A/' . $currency . '/?format=json');
+
+    if (is_wp_error($response)) {
+        return false;
+    }
+
+    $body = wp_remote_retrieve_body($response);
+    $data = json_decode($body, true);
+
+    if (!isset($data['rates'][0]['mid'])) {
+        return false;
+    }
+
+    return floatval($data['rates'][0]['mid']);
+}
+
+
+function dzielnikWaluty($current_currency) {
+    if ($current_currency === 'GBP') {
+        return 1.0;
+    }
+
+    $kurs_docelowy = get_currency_exchange_rate_from_nbp($current_currency);
+    $kurs_gbp = get_currency_exchange_rate_from_nbp('GBP');
+
+    if ($current_currency === 'PLN') {
+        if($kurs_gbp){
+            return 1 / $kurs_gbp;
+        }else{
+            return 5.08;
+        }
+    }
+
+    if (!$kurs_docelowy || !$kurs_gbp || $kurs_gbp == 0) {
+        return 1.0;
+    }
+
+    return $kurs_docelowy / $kurs_gbp;
+}
+
+
+
 if (empty($partner_tags_ids) || !is_array($partner_tags_ids)) {
     echo '<p>'.__('Brak produktów do wyświetlenia.' , 'remember-forever').'</p>';
     return;
@@ -60,20 +73,6 @@ if (empty($partner_tags_ids) || !is_array($partner_tags_ids)) {
 // Zmiana jezyka WPML
 if (!empty($choosen_lang)) {
     do_action('wpml_switch_language', $choosen_lang);
-
-    switch ($choosen_lang) {
-        case 'pl':
-            $currency = 'PLN';
-            $dzielnik = 1;
-            break;
-        default:
-            $currency = 'EUR';
-            $dzielnik = get_cached_eur_rate();
-            break;
-    }
-} else {
-    $currency = 'PLN';
-    $dzielnik = 1;
 }
 
 // Pobieranie produktów z przypisanych tagów
@@ -105,6 +104,7 @@ if (!empty($partner_tags_ids) && is_array($partner_tags_ids)) {
 
 $current_user = wp_get_current_user();
 $current_user_id = $current_user->ID;
+$dzielnik = dzielnikWaluty($current_currency);
 
 // Teksty statyczne w katalogu - ustawta i zastosujta
 
@@ -148,6 +148,7 @@ if ($query->have_posts()) : ?>
             global $product;
             $title = get_the_title();
             $price_raw = floatval($product->get_price());
+            
 
             // Apply discount 
             global $wpdb;
@@ -174,11 +175,12 @@ if ($query->have_posts()) : ?>
                 $discounted_price = $price_raw; 
             }
 
-            $rounded_price = round($discounted_price / $dzielnik);
-            $converted_price = number_format($rounded_price, 2, '.', '');
+            // $rounded_price = round($discounted_price );
+            $converted_price = round($discounted_price / $dzielnik);
+            $converted_price = number_format($converted_price, 2, '.', '');
 
 
-            // $converted_price = number_format($discounted_price / $dzielnik, 2, '.', '');
+
 
             $image = wp_get_attachment_image($product->get_image_id(), 'medium');
             ?>
@@ -188,7 +190,7 @@ if ($query->have_posts()) : ?>
                 <p>
                     <span><?php echo esc_html($cena); ?></span> 
                     <?php if(is_null($discount_apply_rm)): ?>
-                    <?php echo $converted_price  . ' ' . $currency; ?>
+                    <?php echo $converted_price  . ' ' . $current_currency; ?>
                     <?php endif; ?>
                 </p>
 

@@ -293,6 +293,8 @@ if (isset($_POST['rm_sp_discount']) && is_array($_POST['rm_sp_discount'])) {
                                         $title = get_the_title();
                                         $image = wp_get_attachment_image($product->get_image_id(), 'thumbnail');
                                         $price = $product->get_price_html();
+                                        
+
 
                                         $product_id = $product->get_id();
                                         $discount = $wpdb->get_var($wpdb->prepare(
@@ -300,6 +302,10 @@ if (isset($_POST['rm_sp_discount']) && is_array($_POST['rm_sp_discount'])) {
                                             $user_id,
                                             $product_id
                                         ));
+
+                                        $price_numeric = floatval($product->get_price());
+
+                                        $price_numeric = number_format($price_numeric , 2);
 
                                         $discount = $discount !== null ? intval($discount) : '';
                                         
@@ -312,7 +318,16 @@ if (isset($_POST['rm_sp_discount']) && is_array($_POST['rm_sp_discount'])) {
                                                 <?php echo $image; ?>
                                             </td>
                                             <td>
-                                                <?php echo $price; ?>
+                                                <p><?php echo $price; ?></p>
+                                                <p>
+                                                    <span>Po rabacie:</span>
+                                                    <?php if($price_numeric && !is_null($discount) && $discount > 0 ): 
+                                                        $discounted_price = $price_numeric * (1 - ($discount / 100));
+
+                                                    ?>
+                                                    <span><?php echo wc_price($discounted_price); ?></span>
+                                                    <?php endif; ?>
+                                                </p>
                                             </td>
                                             <td>
                                                <input type="number" min="0" max="99" name="rm_sp_discount[<?php echo $product->get_id(); ?>][value]"  value="<?php echo esc_attr($discount); ?>">

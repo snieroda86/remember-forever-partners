@@ -1,9 +1,14 @@
 <div class="account-has_access-partner-wrapper">
-	
+	<?php 
+
+
+	 ?>
 	<div class="row g-5">
 		<div class="col-md-4">
 			<?php 
+			$current_lang = apply_filters( 'wpml_current_language', NULL );
 			$user_id = get_current_user_id();
+			$current_currency = get_woocommerce_currency();
 
 			$company_name = get_user_meta($user_id, 'company_name', true);
 			$company_address = get_user_meta($user_id, 'company_address', true);
@@ -28,10 +33,10 @@
 			            <td><?php echo esc_html($company_nip); ?></td>
 			        </tr>
 			        
-			        <tr>
+			        <!-- <tr>
 			            <th class="bg-light"><?php _e('Rabat(%)', 'remember-forever'); ?></th>
 			            <td><?php echo esc_html($partner_discount); ?>%</td>
-			        </tr>
+			        </tr> -->
 			    </tbody>
 			</table>
 
@@ -68,8 +73,14 @@
 				if ( isset( $sitepress ) ) :
 				$enabled_languages = $sitepress->get_active_languages(); 
 				?>
-				<div class="lang-cataloge-switch pb-2">
-					<?php echo do_shortcode('[wpml_language_switcher type="widget" flags=1 native=1 translated=1][/wpml_language_switcher]'); ?>
+				<div class="lang-cataloge-switch mb-3 mt-1 bg-light p-3">
+					<div class="row g-3">
+						<div class="col-12">
+							<div><?php _e('Wybierz język' , 'remember-forever'); ?></div>
+							<div><?php echo do_shortcode('[wpml_language_switcher type="widget" flags=1 native=1 translated=1][/wpml_language_switcher]'); ?></div>
+						</div>
+						
+					</div>
 				</div>
 				<?php endif; ?>
 
@@ -78,7 +89,7 @@
 				// Enabled languages
 				
 				if ( isset( $sitepress ) ) { 
-					$current_lang = apply_filters( 'wpml_current_language', NULL );
+					
 
 					?>
 				    <div>
@@ -87,6 +98,7 @@
 							<input type="hidden" name="action" value="generuj_pdf">
 							<?php wp_nonce_field('formularz_pdf', 'pdf_nonce'); ?>
 								<input type="hidden" name="choosen_lang"  value="<?php echo esc_html($current_lang); ?>">
+								<input type="hidden" name="current_currency" value="<?php echo esc_html($current_currency); ?>">
 								<?php 
 								$partner_tags_ids = get_user_meta($user_id , $current_lang.'_partner_p_tags_assigned' , true);
 								if( !empty($partner_tags_ids) && is_array($partner_tags_ids)){
@@ -126,9 +138,11 @@
 							        <table class="table table-bordered">
 							            <thead>
 							                <tr>
-							                    <th>Nazwa produktu</th>
-							                    <th>Obrazek</th>
-							                    <th>Wybierz</th>
+							                    <th><?php _e('Nazwa produktu' , 'remember-forever') ?></th>
+							                    <th><?php _e('Cena' , 'remember-forever'); ?></th>
+
+							                    <th><?php _e('Obrazek' , 'remember-forever'); ?></th>
+							                    <th><?php _e('Wybierz' ,'remember-forever'); ?></th>
 							                </tr>
 							            </thead>
 							            <tbody>
@@ -141,6 +155,41 @@
 							                    ?>
 							                    <tr>
 							                        <td><?php echo esc_html($title); ?></td>
+							                        <td>
+							                        	<p><?php echo $product->get_price_html(); ?></p>
+							                        	<p>
+							                        		<?php 
+							                        		// Get discoutn
+							                        		global $wpdb;
+															$table_name = $wpdb->prefix . 'partners_product_discount';
+
+															$product_discount = $wpdb->get_var(
+															    $wpdb->prepare(
+															        "SELECT discount_percentage FROM $table_name WHERE user_id = %d AND product_id = %d",
+															        $user_id,
+															        $product_id
+															    )
+															);
+
+
+							                        		 ?>
+							                        		<?php 
+														    $original_price = (float) $product->get_price();
+
+														    if ($product_discount !== null && is_numeric($product_discount) && $product_discount >= 1) {
+														        $discounted_price = $original_price * (1 - ($product_discount / 100));
+														        $discounted_price = round($discounted_price); 
+														        $formatted_price = number_format($discounted_price, 2, '.', ''); 
+
+														        echo '<span class="pe-1">' . __('Po rabacie:', 'remember-forever') . '</span>';
+														        echo '<span>' . wc_price($formatted_price) . '</span>';
+														    }
+														?>
+
+							                        		
+							                        		
+							                        	</p>
+							                        </td>
 							                        <td><?php echo $image; ?></td>
 							                        <td>
 							                            <input type="checkbox" name="selected_products[]" value="<?php echo esc_attr($product_id); ?>">
@@ -155,7 +204,7 @@
 								    <p><?php _e('Brak produktów' , 'remember-forever'); ?></p>
 								<?php endif; ?>
 
-								</div>
+								</div>	
 
 								<!-- Products end -->
 

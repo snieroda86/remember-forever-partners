@@ -136,23 +136,26 @@ if( ! class_exists('Remember_Forever_Partners')){
 		    // Create custom tabel - partners_product_discount
 		    global $wpdb;
 
-   			$table_name = $wpdb->prefix . "partners_product_discount";
-   			$charset_collate = $wpdb->get_charset_collate();
+			$table_name = $wpdb->prefix . "partners_product_discount";
+			$posts_table = $wpdb->prefix . "posts";
+			$users_table = $wpdb->prefix . "users";
+			$charset_collate = $wpdb->get_charset_collate();
 
 			$sql = "CREATE TABLE $table_name (
-			  `id` int(11) NOT NULL AUTO_INCREMENT,
-			  `user_id` bigint(20) unsigned NOT NULL,
-			  `product_id` bigint(20) unsigned NOT NULL,
-			  `discount_percentage` int(11) NOT NULL,
-			  PRIMARY KEY (`id`),
-			  KEY `User` (`user_id`),
-			  KEY `Product` (`product_id`),
-			  CONSTRAINT `Product` FOREIGN KEY (`product_id`) REFERENCES `snwp_posts` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-			  CONSTRAINT `User` FOREIGN KEY (`user_id`) REFERENCES `snwp_users` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+			  id int(11) NOT NULL AUTO_INCREMENT,
+			  user_id bigint(20) unsigned NOT NULL,
+			  product_id bigint(20) unsigned NOT NULL,
+			  discount_percentage int(11) NOT NULL,
+			  PRIMARY KEY (id),
+			  KEY user_id (user_id),
+			  KEY product_id (product_id),
+			  CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES $posts_table(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+			  CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES $users_table(ID) ON DELETE CASCADE ON UPDATE CASCADE
 			) $charset_collate;";
 
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );
+
 
 
 
