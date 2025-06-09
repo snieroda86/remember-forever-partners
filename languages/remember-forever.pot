@@ -1,0 +1,288 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Partnerzy biznesowi\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-09 13:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.1; php-8.2.12\n"
+"X-Domain: remember-forever"
+
+#: shortcodes/business-partners-registration-form.php:111
+msgid ""
+"After verifying your data, you will be granted access to your account, where "
+"you will be able to generate a catalog of products from our offer."
+msgstr ""
+
+#: views/business-partner-registration-form.php:17
+msgid "Already have a partner account?"
+msgstr ""
+
+#: views/account/account-full-access.php:56
+msgid ""
+"Below you can generate a product catalog in PDF format for which we have "
+"granted you access."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:113
+msgid "Best regards,"
+msgstr ""
+
+#: views/account/generate-pdf-process.php:69
+msgid "Brak produktów do wyświetlenia."
+msgstr ""
+
+#: views/account/account-full-access-old.php:57
+msgid ""
+"Ceny produktów wygenerowane w katalogu mogą różnić się od cen podanych obok "
+"produktów ze względu na różnice w kursach walut."
+msgstr ""
+
+#: views/account/account-full-access.php:83
+msgid "Choose language"
+msgstr ""
+
+#: views/business-partner-registration-form.php:30
+#: views/account/account-full-access-old.php:23
+#: views/account/account-full-access.php:28
+msgid "Company address"
+msgstr ""
+
+#: views/business-partner-registration-form.php:25
+#: views/account/account-full-access-old.php:19
+#: views/account/account-full-access.php:24
+msgid "Company name"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:109
+msgid "Congratulations!"
+msgstr ""
+
+#: views/business-partner-registration-form.php:12
+msgid "Create a business customer account and become our partner!"
+msgstr ""
+
+#: views/account/account-full-access-old.php:33
+#: views/account/account-full-access.php:37
+msgid "Discount (%)"
+msgstr ""
+
+#: views/account/account-full-access.php:222
+msgid "Do not display prices in the catalog"
+msgstr ""
+
+#: views/business-partner-registration-form.php:45
+msgid "Email"
+msgstr ""
+
+#: views/business-partner-login-form.php:29
+msgid "Email address"
+msgstr ""
+
+#: views/account/account-full-access.php:228
+msgid "Generate PDF catalog"
+msgstr ""
+
+#: views/account/account-full-access-old.php:136
+msgid "Generuj katalog PDF"
+msgstr ""
+
+#. Description of the plugin
+msgid "Handle the basics with this plugin."
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://author.example.com/"
+msgstr ""
+
+#. URI of the plugin
+msgid "https://example.com/plugins/the-basics/"
+msgstr ""
+
+#: views/account/account-full-access.php:147
+msgid "Image"
+msgstr ""
+
+#: views/business-partner-login-form.php:6
+msgid "Invalid email or password."
+msgstr ""
+
+#: views/business-partner-login-form.php:42
+#: views/business-partner-registration-form.php:19
+msgid "Log in"
+msgstr ""
+
+#: views/business-partner-login-form.php:18
+msgid "Log in to your account and generate a product catalog in PDF format"
+msgstr ""
+
+#: views/account/account-full-access-old.php:43
+#: views/account/account-full-access.php:47
+msgid "Log out"
+msgstr ""
+
+#: views/account/account-full-access.php:209
+msgid "No products found"
+msgstr ""
+
+#: views/account/account-full-access.php:67
+msgid "No products selected."
+msgstr ""
+
+#. Name of the plugin
+#: remember-forever-partners.php:178
+msgid "Partnerzy biznesowi"
+msgstr ""
+
+#: views/business-partner-login-form.php:34
+#: views/business-partner-registration-form.php:50
+msgid "Password"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:74
+msgid "Password is required"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:67
+msgid "Please provide a valid email address."
+msgstr ""
+
+#: views/account/account-full-access-old.php:53
+msgid ""
+"Poniżej masz możliwość wygenerowania katalogu produktów  w formacie PDF, do "
+"których przyznaliśmy Ci dpostęp."
+msgstr ""
+
+#: views/account/account-full-access.php:146
+msgid "Price"
+msgstr ""
+
+#: views/account/account-full-access.php:188
+msgid "Price after discount:"
+msgstr ""
+
+#: views/account/account-full-access.php:145
+msgid "Product name"
+msgstr ""
+
+#: views/account/account-full-access.php:60
+msgid ""
+"Product prices generated in the catalog may differ from the prices shown "
+"next to the products due to currency exchange rate differences."
+msgstr ""
+
+#: views/business-partner-registration-form.php:58
+msgid "Register"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:118
+msgid ""
+"Registration completed successfully! After verifying your data, you will "
+"receive a confirmation email granting access."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:107
+msgid "Registration confirmation on rememberme-forever.com"
+msgstr ""
+
+#. Author of the plugin
+msgid "Sebastian Nieroda"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:24
+msgid "Security error: invalid token."
+msgstr ""
+
+#: views/account/account-full-access.php:148
+msgid "Select"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:44
+msgid ""
+"The company address cannot be empty.\n"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:39
+msgid "The company name cannot be empty."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:65
+msgid "The email address is required."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:76
+msgid "The password must be at least 6 characters long."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:113
+msgid "The rememberme-forever team"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:56
+msgid ""
+"The username is required.\n"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:50
+msgid ""
+"The VAT number cannot be empty.\n"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:69
+msgid "This email address is already registered."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:59
+msgid ""
+"This username is already taken.\n"
+msgstr ""
+
+#: views/business-partner-registration-form.php:40
+msgid "Username"
+msgstr ""
+
+#: views/business-partner-registration-form.php:35
+#: views/account/account-full-access-old.php:27
+#: views/account/account-full-access.php:32
+msgid "VAT number"
+msgstr ""
+
+#: views/account/account-access-danied.php:3
+#: views/account/account-full-access-old.php:50
+#: views/account/account-full-access.php:53
+msgid "Welcome"
+msgstr ""
+
+#: views/business-partner-login-form.php:83
+msgid "You do not have a business partner role"
+msgstr ""
+
+#: views/business-partner-login-form.php:4
+msgid "You have an invalid user role."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:110
+msgid "You have successfully registered as our partner."
+msgstr ""
+
+#: views/account/account-access-danied.php:6
+msgid ""
+"Your account has not yet been verified. After approval by the administrator, "
+"you will receive a notification via email."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:112
+msgid "Your username: "
+msgstr ""
+
+#: views/account/account-full-access-old.php:130
+msgid "Zastosuj rabat"
+msgstr ""

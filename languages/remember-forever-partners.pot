@@ -1,0 +1,371 @@
+# Blank WordPress Pot
+# Copyright 2014 ...
+# This file is distributed under the GNU General Public License v3 or later.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: "
+"Remember Forever "
+"Partners v1.0.0\n"
+"Report-Msgid-Bugs-To: "
+"Translator Name "
+"<translations@example.com>\n"
+"POT-Creation-Date: "
+"2025-06-09 15:38+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Your "
+"Name <you@example.com>\n"
+"Language-Team: Your Team "
+"<translations@example.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/"
+"plain; charset=UTF-8\n"
+"Content-Transfer-"
+"Encoding: 8bit\n"
+"Plural-Forms: "
+"nplurals=2; plural=n != "
+"1;\n"
+"X-Textdomain-Support: "
+"yesX-Generator: Poedit "
+"1.6.4\n"
+"X-Poedit-SourceCharset: "
+"UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;esc_html_e;esc_html_x:1,2c;esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Bookmarks: \n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-"
+"SearchPath-0: .\n"
+
+#: remember-forever-partners.php:178
+msgid "Partnerzy biznesowi"
+msgstr ""
+
+#: remember-forever-partners.php:214
+msgid "Brak dostępu."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:24
+msgid ""
+"Security error: invalid "
+"token."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:39
+msgid ""
+"The company name cannot "
+"be empty."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:44
+msgid ""
+"The company address "
+"cannot be empty.\n"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:50
+msgid ""
+"The VAT number cannot be "
+"empty.\n"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:56
+msgid ""
+"The username is "
+"required.\n"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:59
+msgid ""
+"This username is already "
+"taken.\n"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:65
+msgid ""
+"The email address is "
+"required."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:67
+msgid ""
+"Please provide a valid "
+"email address."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:69
+msgid ""
+"This email address is "
+"already registered."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:74
+msgid ""
+"Password is required"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:76
+msgid ""
+"The password must be at "
+"least 6 characters long."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:107
+msgid ""
+"Registration "
+"confirmation on "
+"rememberme-forever.com"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:109
+msgid "Congratulations!"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:110
+msgid ""
+"You have successfully "
+"registered as our "
+"partner."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:111
+msgid ""
+"After verifying your "
+"data, you will be "
+"granted access to your "
+"account, where you will "
+"be able to generate a "
+"catalog of products from "
+"our offer."
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:112
+msgid "Your username: "
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:113
+msgid "Best regards,"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:113
+msgid ""
+"The rememberme-forever "
+"team"
+msgstr ""
+
+#: shortcodes/business-partners-registration-form.php:118
+msgid ""
+"Registration completed "
+"successfully! After "
+"verifying your data, you "
+"will receive a "
+"confirmation email "
+"granting access."
+msgstr ""
+
+#: views/account/account-access-danied.php:3
+#: views/account/account-full-access-old.php:50
+#: views/account/account-full-access.php:53
+msgid "Welcome"
+msgstr ""
+
+#: views/account/account-access-danied.php:6
+msgid ""
+"Your account has not yet "
+"been verified. After "
+"approval by the "
+"administrator, you will "
+"receive a notification "
+"via email."
+msgstr ""
+
+#: views/account/account-full-access-old.php:19
+#: views/account/account-full-access.php:24
+#: views/business-partner-registration-form.php:25
+msgid "Company name"
+msgstr ""
+
+#: views/account/account-full-access-old.php:23
+#: views/account/account-full-access.php:28
+#: views/business-partner-registration-form.php:30
+msgid "Company address"
+msgstr ""
+
+#: views/account/account-full-access-old.php:27
+#: views/account/account-full-access.php:32
+#: views/business-partner-registration-form.php:35
+msgid "VAT number"
+msgstr ""
+
+#: views/account/account-full-access-old.php:33
+#: views/account/account-full-access.php:37
+msgid "Discount (%)"
+msgstr ""
+
+#: views/account/account-full-access-old.php:43
+#: views/account/account-full-access.php:47
+msgid "Log out"
+msgstr ""
+
+#: views/account/account-full-access-old.php:53
+msgid ""
+"Poniżej masz możliwość "
+"wygenerowania katalogu "
+"produktów  w formacie "
+"PDF, do których "
+"przyznaliśmy Ci dpostęp."
+msgstr ""
+
+#: views/account/account-full-access-old.php:57
+msgid ""
+"Ceny produktów "
+"wygenerowane w katalogu "
+"mogą różnić się od cen "
+"podanych obok produktów "
+"ze względu na różnice w "
+"kursach walut."
+msgstr ""
+
+#: views/account/account-full-access-old.php:130
+msgid "Zastosuj rabat"
+msgstr ""
+
+#: views/account/account-full-access-old.php:136
+msgid "Generuj katalog PDF"
+msgstr ""
+
+#: views/account/account-full-access.php:56
+msgid ""
+"Below you can generate a "
+"product catalog in PDF "
+"format for which we have "
+"granted you access."
+msgstr ""
+
+#: views/account/account-full-access.php:60
+msgid ""
+"Product prices generated "
+"in the catalog may "
+"differ from the prices "
+"shown next to the "
+"products due to currency "
+"exchange rate "
+"differences."
+msgstr ""
+
+#: views/account/account-full-access.php:67
+msgid ""
+"No products selected."
+msgstr ""
+
+#: views/account/account-full-access.php:83
+msgid "Choose language"
+msgstr ""
+
+#: views/account/account-full-access.php:145
+msgid "Product name"
+msgstr ""
+
+#: views/account/account-full-access.php:146
+msgid "Price"
+msgstr ""
+
+#: views/account/account-full-access.php:147
+msgid "Image"
+msgstr ""
+
+#: views/account/account-full-access.php:148
+msgid "Select"
+msgstr ""
+
+#: views/account/account-full-access.php:188
+msgid ""
+"Price after discount:"
+msgstr ""
+
+#: views/account/account-full-access.php:209
+msgid "No products found"
+msgstr ""
+
+#: views/account/account-full-access.php:222
+msgid ""
+"Do not display prices in "
+"the catalog"
+msgstr ""
+
+#: views/account/account-full-access.php:228
+msgid ""
+"Generate PDF catalog"
+msgstr ""
+
+#: views/account/generate-pdf-process.php:69
+msgid ""
+"Brak produktów do "
+"wyświetlenia."
+msgstr ""
+
+#: views/business-partner-login-form.php:4
+msgid ""
+"You have an invalid user "
+"role."
+msgstr ""
+
+#: views/business-partner-login-form.php:6
+msgid ""
+"Invalid email or "
+"password."
+msgstr ""
+
+#: views/business-partner-login-form.php:18
+msgid ""
+"Log in to your account "
+"and generate a product "
+"catalog in PDF format"
+msgstr ""
+
+#: views/business-partner-login-form.php:29
+msgid "Email address"
+msgstr ""
+
+#: views/business-partner-login-form.php:34
+#: views/business-partner-registration-form.php:50
+msgid "Password"
+msgstr ""
+
+#: views/business-partner-login-form.php:42
+#: views/business-partner-registration-form.php:19
+msgid "Log in"
+msgstr ""
+
+#: views/business-partner-login-form.php:83
+msgid ""
+"You do not have a "
+"business partner role"
+msgstr ""
+
+#: views/business-partner-registration-form.php:12
+msgid ""
+"Create a business "
+"customer account and "
+"become our partner!"
+msgstr ""
+
+#: views/business-partner-registration-form.php:17
+msgid ""
+"Already have a partner "
+"account?"
+msgstr ""
+
+#: views/business-partner-registration-form.php:40
+msgid "Username"
+msgstr ""
+
+#: views/business-partner-registration-form.php:45
+msgid "Email"
+msgstr ""
+
+#: views/business-partner-registration-form.php:58
+msgid "Register"
+msgstr ""

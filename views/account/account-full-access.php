@@ -185,7 +185,8 @@
 														        $discounted_price = round($discounted_price); 
 														        $formatted_price = number_format($discounted_price, 2, '.', ''); 
 
-														        echo '<span class="pe-1">' . __('Po rabacie:', 'remember-forever') . '</span>';
+														       echo '<span class="pe-1">' . __('Price after discount:', 'remember-forever') . '</span>';
+
 														        echo '<span>' . wc_price($formatted_price) . '</span>';
 														    }
 														?>
