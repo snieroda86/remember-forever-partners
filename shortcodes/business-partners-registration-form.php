@@ -21,7 +21,7 @@ if(!class_exists('RMB_Forever_Registration')){
 			        !isset($_POST['rmf_partner_register_nonce']) ||
 			        !wp_verify_nonce($_POST['rmf_partner_register_nonce'], 'rmf_partner_register_action')
 			    ) {
-			        echo '<div class="alert alert-danger">' . esc_html__('Błąd bezpieczeństwa: nieprawidłowy token.', 'remember-forever') . '</div>';
+			        echo '<div class="alert alert-danger">' . esc_html__('Security error: invalid token.', 'remember-forever') . '</div>';
 			        return ob_get_clean(); 
 			    }
 		        
@@ -36,40 +36,44 @@ if(!class_exists('RMB_Forever_Registration')){
 
 				// Nazwa firmy
 				if (empty($company_name)) {
-				    $rmf_errors['company_name'] = __('Nazwa firmy nie może być pusta.', 'remember-forever');
+				    $rmf_errors['company_name'] = __('The company name cannot be empty.', 'remember-forever');
 				}
 
 				// Adres firmy
 				if (empty($company_address)) {
-				    $rmf_errors['company_address'] = __('Adres firmy nie może być pusty.', 'remember-forever');
+				    $rmf_errors['company_address'] = __('The company address cannot be empty.
+', 'remember-forever');
 				}
 
 				// NIP 
 				if (empty($company_nip)) {
-				    $rmf_errors['company_nip'] = __('Numer NIP nie może być pusty.', 'remember-forever');
+				    $rmf_errors['company_nip'] = __('The VAT number cannot be empty.
+', 'remember-forever');
 				} 
 
 				// Nazwa użytkownika
 				if (empty($company_user_login)) {
-				    $rmf_errors['company_user_login'] = __('Nazwa użytkownika jest wymagana.', 'remember-forever');
+				    $rmf_errors['company_user_login'] = __('The username is required.
+', 'remember-forever');
 				}elseif (username_exists($company_user_login)) {
-				    $rmf_errors['company_user_login'] = __('Ta nazwa użytkownika jest już zajęta.', 'remember-forever');
+				    $rmf_errors['company_user_login'] = __('This username is already taken.
+', 'remember-forever');
 				}
 
 				// Email
 				if (empty($email)) {
-				    $rmf_errors['email'] = __('Adres email jest wymagany.', 'remember-forever');
+				    $rmf_errors['email'] = __('The email address is required.', 'remember-forever');
 				} elseif (!is_email($email)) {
-				    $rmf_errors['email'] = __('Podaj poprawny adres email.', 'remember-forever');
+				    $rmf_errors['email'] = __('Please provide a valid email address.', 'remember-forever');
 				} elseif (email_exists($email)) {
-				    $rmf_errors['email'] = __('Ten adres email jest już zarejestrowany.', 'remember-forever');
+				    $rmf_errors['email'] = __('This email address is already registered.', 'remember-forever');
 				}
 
 				// Hasło
 				if (empty($password)) {
-				    $rmf_errors['password'] = __('Hasło jest wymagane.', 'remember-forever');
+				    $rmf_errors['password'] = __('Password is required', 'remember-forever');
 				} elseif (strlen($password) < 6) {
-				    $rmf_errors['password'] = __('Hasło musi zawierać co najmniej 6 znaków.', 'remember-forever');
+				    $rmf_errors['password'] = __('The password must be at least 6 characters long.', 'remember-forever');
 				}
 
 		      	if (empty($rmf_errors)) {
@@ -100,18 +104,19 @@ if(!class_exists('RMB_Forever_Registration')){
 					    wp_mail( $this->admin_email , $admin_subject, $admin_message, $headers );
 
 					    // Send email to user
-					    $user_subject = 'Potwierdzenie rejestracji na stronie rememberme-forever.com';
-					    $user_message = 'Gratulacje!<br><br>';
-						$user_message .= 'Poprawnie zarejestrowałeś się jako nasz partner.<br>';
-						$user_message .= 'Po weryfikacji Twoich danych zostanie przyznany Ci dostęp do konta, gdzie będziesz mógł wygenerować katalog z produktami z naszej oferty.<br><br>';
-						$user_message .= 'Twoja nazwa użytkownika: ' . sanitize_text_field($company_user_login) . '<br><br>';
-						$user_message .= 'Pozdrawiamy,<br>Zespół rememberme-forever<br>';
-						
+						$user_subject = __( 'Registration confirmation on rememberme-forever.com', 'remember-forever' );
+
+						$user_message  = __( 'Congratulations!', 'remember-forever' ) . '<br><br>';
+						$user_message .= __( 'You have successfully registered as our partner.', 'remember-forever' ) . '<br>';
+						$user_message .= __( 'After verifying your data, you will be granted access to your account, where you will be able to generate a catalog of products from our offer.', 'remember-forever' ) . '<br><br>';
+						$user_message .= __( 'Your username: ', 'remember-forever' ) . sanitize_text_field($company_user_login) . '<br><br>';
+						$user_message .= __( 'Best regards,', 'remember-forever' ) . '<br>' . __( 'The rememberme-forever team', 'remember-forever' ) . '<br>';
+
+						wp_mail( $email, $user_subject, $user_message, $headers );
 
 
-					    wp_mail( $email , $user_subject, $user_message, $headers );
+					    echo '<div class="alert alert-success text-center">' . esc_html__('Registration completed successfully! After verifying your data, you will receive a confirmation email granting access.', 'remember-forever') . '</div>';
 
-					    echo '<div class="alert alert-success text-center">' . esc_html__('Rejestracja zakończona sukcesem! Po weryfikacji Twoich danych otrzymasz maila z potwierdzeniem przyznania dostępu.', 'remember-forever') . '</div>';
 
 					}
 

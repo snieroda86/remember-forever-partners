@@ -20,48 +20,52 @@
 			<table class="table table-bordered">
 			    
 			    <tbody>
-			        <tr>
-			            <th class="bg-light"><?php _e('Nazwa firmy', 'remember-forever'); ?></th>
-			            <td><?php echo esc_html($company_name); ?></td>
-			        </tr>
-			        <tr>
-			            <th class="bg-light"><?php _e('Adres firmy', 'remember-forever'); ?></th>
-			            <td><?php echo esc_html($company_address); ?></td>
-			        </tr>
-			        <tr>
-			            <th class="bg-light"><?php _e('NIP', 'remember-forever'); ?></th>
-			            <td><?php echo esc_html($company_nip); ?></td>
-			        </tr>
-			        
-			        <!-- <tr>
-			            <th class="bg-light"><?php _e('Rabat(%)', 'remember-forever'); ?></th>
-			            <td><?php echo esc_html($partner_discount); ?>%</td>
-			        </tr> -->
-			    </tbody>
+				    <tr>
+				        <th class="bg-light"><?php _e('Company name', 'remember-forever'); ?></th>
+				        <td><?php echo esc_html($company_name); ?></td>
+				    </tr>
+				    <tr>
+				        <th class="bg-light"><?php _e('Company address', 'remember-forever'); ?></th>
+				        <td><?php echo esc_html($company_address); ?></td>
+				    </tr>
+				    <tr>
+				        <th class="bg-light"><?php _e('VAT number', 'remember-forever'); ?></th>
+				        <td><?php echo esc_html($company_nip); ?></td>
+				    </tr>
+				    
+				    <!-- <tr>
+				        <th class="bg-light"><?php _e('Discount (%)', 'remember-forever'); ?></th>
+				        <td><?php echo esc_html($partner_discount); ?>%</td>
+				    </tr> -->
+				</tbody>
+			    
 			</table>
 
 			<div class="pt-3">
 				<?php $logout_url = wp_logout_url(home_url()); ?>
 				<a href="<?php echo esc_url($logout_url) ?>" class="btn brn-danger">
-					<?php _e('Wyloguj się' , 'remember-forever') ?>
+					<?php _e('Log out' , 'remember-forever') ?>
 				</a>
 			</div>
 		</div>
 		<div class="col-md-8">
 			<h5 class="pb-4">
-				<?php _e('Witaj', 'remember-forever'); ?> <?php echo ($current_user) ? esc_html($current_user->user_login) : ''; ?>
+			    <?php _e('Welcome', 'remember-forever'); ?> <?php echo ($current_user) ? esc_html($current_user->user_login) : ''; ?>
 			</h5>
 			<p>
-				<?php _e('Poniżej masz możliwość wygenerowania katalogu produktów  w formacie PDF, do których przyznaliśmy Ci dpostęp.', 'remember-forever'); ?>
-				<br>
-				<?php _e('Aby zastosować rabat w cenach produktów zaznacz odpowiedni checkbox obok przycisku "Generuj katalog".', 'remember-forever'); ?>
+			    <?php _e('Below you can generate a product catalog in PDF format for which we have granted you access.', 'remember-forever'); ?>
 			</p>
+
+			<div class="alert alert-info mb-2 mt-2">
+			    <?php _e('Product prices generated in the catalog may differ from the prices shown next to the products due to currency exchange rate differences.', 'remember-forever'); ?>
+			</div>
 
 			<!-- Error display -->
 			<div>
 				<?php 
 				if (isset($_GET['no_products']) && $_GET['no_products'] == '1') {
-				    echo '<div class="alert alert-danger mt-3"><p>' . esc_html__('Nie wybrano produktów.', 'remember-forever') . '</p></div>';
+				    echo '<div class="alert alert-danger mt-3"><p>' . esc_html__('No products selected.', 'remember-forever') . '</p></div>';
+
 				}
 				 ?>
 
@@ -76,7 +80,7 @@
 				<div class="lang-cataloge-switch mb-3 mt-1 bg-light p-3">
 					<div class="row g-3">
 						<div class="col-12">
-							<div><?php _e('Wybierz język' , 'remember-forever'); ?></div>
+							<div><?php _e('Choose language' , 'remember-forever'); ?></div>
 							<div><?php echo do_shortcode('[wpml_language_switcher type="widget" flags=1 native=1 translated=1][/wpml_language_switcher]'); ?></div>
 						</div>
 						
@@ -135,16 +139,16 @@
 
 								<?php if ($query->have_posts()) : ?>
 								   
-							        <table class="table table-bordered">
+							        <table class="table table-bordered partner-products-table-sn">
 							            <thead>
-							                <tr>
-							                    <th><?php _e('Nazwa produktu' , 'remember-forever') ?></th>
-							                    <th><?php _e('Cena' , 'remember-forever'); ?></th>
+										    <tr>
+										        <th><?php _e('Product name', 'remember-forever') ?></th>
+										        <th><?php _e('Price', 'remember-forever'); ?></th>
+										        <th><?php _e('Image', 'remember-forever'); ?></th>
+										        <th><?php _e('Select', 'remember-forever'); ?></th>
+										    </tr>
+										</thead>
 
-							                    <th><?php _e('Obrazek' , 'remember-forever'); ?></th>
-							                    <th><?php _e('Wybierz' ,'remember-forever'); ?></th>
-							                </tr>
-							            </thead>
 							            <tbody>
 							                <?php while ($query->have_posts()) : $query->the_post(); ?>
 							                    <?php
@@ -201,7 +205,7 @@
 								   
 								    <?php wp_reset_postdata(); ?>
 								<?php else : ?>
-								    <p><?php _e('Brak produktów' , 'remember-forever'); ?></p>
+								    <p><?php _e('No products found' , 'remember-forever'); ?></p>
 								<?php endif; ?>
 
 								</div>	
@@ -214,12 +218,14 @@
 										<label>
 											
 											<input class="form-check-input" type="checkbox"  name="discount_apply_rm">
-											<?php _e('Nie wyświetlaj cen w katalogu' , 'remember-forever'); ?>
+											<?php _e('Do not display prices in the catalog', 'remember-forever'); ?>
+
 										</label>
 										
 									</div>
 									<div>
-										<input value="<?php _e('Generuj katalog PDF' , 'remember-forever'); ?>" class="btn btn-primary" type="submit" name="generate_catalog_rm_submit">
+										<input value="<?php _e('Generate PDF catalog', 'remember-forever'); ?>" class="btn btn-primary" type="submit" name="generate_catalog_rm_submit">
+
 									</div>
 
 								</div>
@@ -241,49 +247,7 @@
 
 	<script type="text/javascript">
 		jQuery(document).ready(function($) {
-			// var tabsNavItems = document.querySelectorAll('.generate-catalog-tabs li');
-			// var tabContents = document.querySelectorAll('.tab-content');
-
 			
-			// tabsNavItems.forEach(function(item) {
-			// 	item.classList.remove('active');
-			// });
-			// tabContents.forEach(function(content) {
-			// 	content.style.display = 'none';
-			// });
-
-			
-			// if (tabsNavItems.length > 0) {
-			// 	var firstTab = tabsNavItems[0];
-			// 	firstTab.classList.add('active');
-
-			// 	var lang = firstTab.getAttribute('data-lang-tab');
-			// 	var firstContent = document.querySelector('.tab-content[data-lang="' + lang + '"]');
-			// 	if (firstContent) {
-			// 		firstContent.style.display = 'block';
-			// 	}
-			// }
-
-			
-			// tabsNavItems.forEach(function(item){
-			// 	item.addEventListener("click", function(e){
-			// 		e.preventDefault();
-
-					
-			// 		tabsNavItems.forEach(function(el) { el.classList.remove('active'); });
-			// 		tabContents.forEach(function(content) { content.style.display = 'none'; });
-
-					
-			// 		this.classList.add('active');
-
-					
-			// 		var lang = this.getAttribute('data-lang-tab');
-			// 		var selectedContent = document.querySelector('.tab-content[data-lang="' + lang + '"]');
-			// 		if (selectedContent) {
-			// 			selectedContent.style.display = 'block';
-			// 		}
-			// 	});
-			// });
 		});
 
 

@@ -103,8 +103,8 @@ if( ! class_exists('Remember_Forever_Partners')){
 			}
 
 		    // Create login / business partneta account page 
-		    $page_title = 'Konto partnera biznesowego';
-		    $page_slug = 'konto-partnera-biznesowego';
+		    $page_title = 'Partner account';
+		    $page_slug = 'remember-forever-partner-account';
 		    $current_user = wp_get_current_user();
 
 		    $args = array(

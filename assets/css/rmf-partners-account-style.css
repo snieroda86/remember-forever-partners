@@ -29,3 +29,7 @@
 	background: #888;
 	color:  #fff;
 }
+
+.partner-products-table-sn td img{
+	contain-intrinsic-size: 100px auto !important;
+}

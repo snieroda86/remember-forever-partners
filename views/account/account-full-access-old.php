@@ -15,43 +15,47 @@
 			<table class="table table-bordered">
 			    
 			    <tbody>
-			        <tr>
-			            <th class="bg-light"><?php _e('Nazwa firmy', 'remember-forever'); ?></th>
-			            <td><?php echo esc_html($company_name); ?></td>
-			        </tr>
-			        <tr>
-			            <th class="bg-light"><?php _e('Adres firmy', 'remember-forever'); ?></th>
-			            <td><?php echo esc_html($company_address); ?></td>
-			        </tr>
-			        <tr>
-			            <th class="bg-light"><?php _e('NIP', 'remember-forever'); ?></th>
-			            <td><?php echo esc_html($company_nip); ?></td>
-			        </tr>
-			        
-			        
-			        <!-- <tr>
-			            <th class="bg-light"><?php _e('Rabat(%)', 'remember-forever'); ?></th>
-			            <td><?php echo esc_html($partner_discount); ?>%</td>
-			        </tr> -->
-			    </tbody>
+				    <tr>
+				        <th class="bg-light"><?php _e('Company name', 'remember-forever'); ?></th>
+				        <td><?php echo esc_html($company_name); ?></td>
+				    </tr>
+				    <tr>
+				        <th class="bg-light"><?php _e('Company address', 'remember-forever'); ?></th>
+				        <td><?php echo esc_html($company_address); ?></td>
+				    </tr>
+				    <tr>
+				        <th class="bg-light"><?php _e('VAT number', 'remember-forever'); ?></th>
+				        <td><?php echo esc_html($company_nip); ?></td>
+				    </tr>
+				    
+				    
+				    <!-- <tr>
+				        <th class="bg-light"><?php _e('Discount (%)', 'remember-forever'); ?></th>
+				        <td><?php echo esc_html($partner_discount); ?>%</td>
+				    </tr> -->
+				</tbody>
+
 			</table>
 
 			<div class="pt-3">
 				<?php $logout_url = wp_logout_url(home_url()); ?>
 				<a href="<?php echo esc_url($logout_url) ?>" class="btn brn-danger">
-					<?php _e('Wyloguj się' , 'remember-forever') ?>
+					<?php _e('Log out', 'remember-forever') ?>
+
 				</a>
 			</div>
 		</div>
 		<div class="col-md-8">
 			<h5 class="pb-4">
-				<?php _e('Witaj', 'remember-forever'); ?> <?php echo ($current_user) ? esc_html($current_user->user_login) : ''; ?>
+				<?php _e('Welcome', 'remember-forever'); ?> <?php echo ($current_user) ? esc_html($current_user->user_login) : ''; ?>
 			</h5>
 			<p>
 				<?php _e('Poniżej masz możliwość wygenerowania katalogu produktów  w formacie PDF, do których przyznaliśmy Ci dpostęp.', 'remember-forever'); ?>
-				<br>
-				<?php _e('Aby zastosować rabat w cenach produktów zaznacz odpowiedni checkbox obok przycisku "Generuj katalog".', 'remember-forever'); ?>
 			</p>
+
+			<div class="alert alert-info mb-3">
+				<?php _e('Ceny produktów wygenerowane w katalogu mogą różnić się od cen podanych obok produktów ze względu na różnice w kursach walut.', 'remember-forever'); ?>
+			</div>
 
 			<!-- Generate catalog form -->
 			<div class="pt-3">

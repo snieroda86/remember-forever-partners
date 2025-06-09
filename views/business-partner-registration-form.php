@@ -9,33 +9,35 @@ if($business_partner_account_page_id){
     <div class="justify-content-center">
         <div class="rmf-partners-form-container">
             <div class="alert alert-info text-center">
-                <?php _e('Załóż konto klienta biznesowego i zostań naszym partnerem!', 'remember-forever'); ?>
+                <?php _e('Create a business customer account and become our partner!', 'remember-forever'); ?>
+
 
                 <br>
                 <?php if($business_partner_login_form): ?>
-                <?php _e('Masz już konto partnera?', 'remember-forever'); ?>
-                <a href="<?php echo esc_url($business_partner_login_form) ?>"><?php _e('Zaloguj się', 'remember-forever'); ?></a>
+                <?php _e('Already have a partner account?', 'remember-forever'); ?>
+
+                <a href="<?php echo esc_url($business_partner_login_form) ?>"><?php _e('Log in', 'remember-forever'); ?></a>
                 <?php endif; ?>
             </div>
 
             <form method="post" class="border p-4 rounded bg-light shadow-sm">
                 <div class="mb-3">
-                    <label for="company_name" class="form-label"><?php _e('Nazwa firmy', 'remember-forever'); ?></label>
+                    <label for="company_name" class="form-label"><?php _e('Company name', 'remember-forever'); ?></label>
                     <input type="text" name="company_name" id="company_name" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="company_address" class="form-label"><?php _e('Adres firmy', 'remember-forever'); ?></label>
+                    <label for="company_address" class="form-label"><?php _e('Company address', 'remember-forever'); ?></label>
                     <input type="text" name="company_address" id="company_address" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="company_nip" class="form-label"><?php _e('Numer NIP', 'remember-forever'); ?></label>
+                    <label for="company_nip" class="form-label"><?php _e('VAT number', 'remember-forever'); ?></label>
                     <input type="text" name="company_nip" id="company_nip" class="form-control" required>
                 </div>
 
-                 <div class="mb-3">
-                    <label for="company_user_Login" class="form-label"><?php _e('nazwa użytkownika', 'remember-forever'); ?></label>
+                <div class="mb-3">
+                    <label for="company_user_login" class="form-label"><?php _e('Username', 'remember-forever'); ?></label>
                     <input type="text" name="company_user_login" id="company_user_login" class="form-control" required>
                 </div>
 
@@ -45,7 +47,7 @@ if($business_partner_account_page_id){
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label"><?php _e('Hasło', 'remember-forever'); ?></label>
+                    <label for="password" class="form-label"><?php _e('Password', 'remember-forever'); ?></label>
                     <input type="password" name="password" minlength="6" id="password" class="form-control" required>
                 </div>
 
@@ -53,10 +55,13 @@ if($business_partner_account_page_id){
                     <?php wp_nonce_field('rmf_partner_register_action', 'rmf_partner_register_nonce'); ?>
 
                     <button type="submit" name="partner_register" class="btn btn-primary">
-                        <?php _e('Zarejestruj się', 'remember-forever'); ?>
+                        <?php _e('Register', 'remember-forever'); ?>
                     </button>
                 </div>
             </form>
+
+
+            
         </div>
     </div>
 </div>
